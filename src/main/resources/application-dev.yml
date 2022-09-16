@@ -1,0 +1,30 @@
+spring:
+  batch:
+    initialize-schema: always
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+  gson:
+    disable-html-escaping: false
+  application:
+    name: Batch-Tx-Service
+  datasource:
+    #    Note: URL for the mariadb is passed as a an argument.
+    #    Add the following IntelliJ Environment Variables in:
+    #    Edit Configurations >> Environment >> Environment Variables
+    #    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #    url: jdbc:mariadb://${DB_IP_ADDR}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://127.0.0.1:3306/${DB_NAME}?createDatabaseIfNotExist=true
+    driverClassName: org.mariadb.jdbc.Driver
+    username: root
+    password: NEW_PASS
+    hikari:
+      auto-commit: true
+  jpa:
+    #    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    database-platform: org.hibernate.dialect.MariaDB53Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop

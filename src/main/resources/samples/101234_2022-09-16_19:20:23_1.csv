@@ -1,0 +1,7 @@
+id, date, time, descr, type, amount
+1, 2022-09-16, 19:19:20, IFT Deposit, D, 100.00
+2, 2022-09-16, 19:12:23, IFT Withdrawal, C, 200.00
+3, 2022-09-16, 18:54:01, EFT Deposit, D, 200.00
+4, 2022-09-16, 16:23:01, EFT Deposit, D, 721.23
+5, 2022-09-16, 15:14:33, IFT Withdrawal, C, 1221.23
+6, 2022-09-16, 12:00:12, IFT Withdrawal, C, 99.99
