@@ -66,7 +66,7 @@ public class SpringBatchConfig {
     public JdbcBatchItemWriter<Tx> itemWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Tx>()
                 .dataSource(dataSource)
-                .sql("INSERT INTO tx (date, time, descr, type, amount) VALUES (:date, :time, :descr, :type, :amount)")
+                .sql("INSERT INTO tx (ref, date, time, descr, type, amount) VALUES (:ref, :date, :time, :descr, :type, :amount)")
                 .beanMapped()
                 .build();
     }
