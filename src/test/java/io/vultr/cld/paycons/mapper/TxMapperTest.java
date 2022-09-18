@@ -6,13 +6,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ActiveProfiles("h2")
 @SpringBootTest
 class TxMapperTest {
     @Autowired
@@ -26,7 +27,7 @@ class TxMapperTest {
                 .time("23:30:01")
                 .descr("IFT Debit")
                 .type('D')
-                .amount(BigDecimal.valueOf(89.99))
+                .amount(89.99D)
                 .build();
     }
 
@@ -36,7 +37,7 @@ class TxMapperTest {
         final Tx tx = txMapper.convertToTx(txDto);
 
         //Then
-        assertEquals(BigDecimal.valueOf(89.99), tx.getAmount());
+        assertEquals(89.99, tx.getAmount());
         assertEquals(LocalDate.of(2022, 9, 16), tx.getDate());
         assertEquals(LocalTime.of(23, 30, 1), tx.getTime());
         assertEquals("IFT Debit", tx.getDescr());
