@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -31,5 +30,5 @@ private Long id;
     private LocalTime time;
     private String descr;
     private String type; //Debit or Credit.
-    private BigDecimal amount;
+    private Double amount;
 }

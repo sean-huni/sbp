@@ -76,7 +76,7 @@ public class SpringBatchConfig {
                    DataSource dataSource, Resource resource) throws Exception {
         return jobs.get("job")
                 .start(steps.get("step")
-                        .<TxDto, Tx>chunk(3)
+                        .<TxDto, Tx>chunk(10_000)
                         .reader(itemReader(resource))
                         .processor(itemProcessor())
                         .writer(itemWriter(dataSource))
