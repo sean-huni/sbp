@@ -1,9 +1,9 @@
 package io.vultr.cld.paycons.config.batch;
 
-import io.vultr.cld.paycons.config.app.Constant;
 import io.vultr.cld.paycons.domain.TxDto;
 import io.vultr.cld.paycons.mapper.TxMapper;
 import io.vultr.cld.paycons.persistence.entity.Tx;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 
 @Configuration
 @EnableBatchProcessing
+@Log4j2
 public class SpringBatchConfig {
 
     private final TxMapper txMapper;
@@ -45,8 +46,14 @@ public class SpringBatchConfig {
                 .name("txItemReader")
                 .resource(resource)
                 .delimited()
-                .names(Constant.CSV_COLUMNS)
+                //id, ref, date, time, descr, type, amount
+                .names("id", "ref", "date", "time", "descr", "type", "amount")
+//                .fieldSetMapper(fieldSet -> {
+//                    log.info("field names: {}", fieldSet.getNames());
+//                    return null;
+//                })
                 .targetType(TxDto.class)
+                .linesToSkip(1)
                 .build();
     }
 
@@ -59,7 +66,7 @@ public class SpringBatchConfig {
     public JdbcBatchItemWriter<Tx> itemWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Tx>()
                 .dataSource(dataSource)
-                .sql("INSERT INTO payment (date, time, descr, type, amount) VALUES (:date, :time, :descr, :type, :amount)")
+                .sql("INSERT INTO tx (date, time, descr, type, amount) VALUES (:date, :time, :descr, :type, :amount)")
                 .beanMapped()
                 .build();
     }
