@@ -22,9 +22,11 @@ import java.time.LocalTime;
 @Builder
 @Entity
 public class Tx extends AbstractJsonUtil {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    id, ref, date, time, descr, type, amount
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+    private String ref;
     private LocalDate date;
     private LocalTime time;
     private String descr;
