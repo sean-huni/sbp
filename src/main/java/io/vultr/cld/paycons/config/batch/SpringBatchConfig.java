@@ -27,7 +27,6 @@ import java.net.MalformedURLException;
 @EnableBatchProcessing
 @Log4j2
 public class SpringBatchConfig {
-
     private final TxMapper txMapper;
 
     public SpringBatchConfig(TxMapper txMapper) {
@@ -42,16 +41,17 @@ public class SpringBatchConfig {
 
     @Bean
     public FlatFileItemReader<TxDto> itemReader(Resource resource) {
+//        "id", "ref", "date", "time", "descr", "type", "amount"
+//                    final var fields = Arrays.stream(TxDto.class.getDeclaredFields())
+//                            .map(Field::getName)
+//                            .collect(Collectors.toList());
+
         return new FlatFileItemReaderBuilder<TxDto>()
                 .name("txItemReader")
                 .resource(resource)
                 .delimited()
                 //id, ref, date, time, descr, type, amount
                 .names("id", "ref", "date", "time", "descr", "type", "amount")
-//                .fieldSetMapper(fieldSet -> {
-//                    log.info("field names: {}", fieldSet.getNames());
-//                    return null;
-//                })
                 .targetType(TxDto.class)
                 .linesToSkip(1)
                 .build();
@@ -83,4 +83,5 @@ public class SpringBatchConfig {
                         .build())
                 .build();
     }
+
 }

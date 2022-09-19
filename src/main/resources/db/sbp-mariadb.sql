@@ -130,7 +130,7 @@ create table tx
     time   time                              not null,
     descr  varchar(100)                      not null,
     type   varchar(1)                        not null,
-    amount double                            not null,
+    amount decimal(20, 2)                    not null,
     constraint tx_ref_unq unique (ref)
 );
 

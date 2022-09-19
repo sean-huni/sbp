@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -27,7 +28,7 @@ class TxMapperTest {
                 .time("23:30:01")
                 .descr("IFT Debit")
                 .type('D')
-                .amount(89.99D)
+                .amount(BigDecimal.valueOf(89.99))
                 .build();
     }
 

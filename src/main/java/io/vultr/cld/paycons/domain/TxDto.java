@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,5 +22,5 @@ public class TxDto extends AbstractJsonUtil {
     private String time;        //Transaction Time
     private String descr;       //Transaction Description
     private Character type;     //Transaction Type -> Debit or Credit.
-    private Double amount;  //Transaction AMount
+    private BigDecimal amount;  //Transaction Amount
 }
