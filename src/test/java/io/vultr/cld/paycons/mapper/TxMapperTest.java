@@ -38,7 +38,7 @@ class TxMapperTest {
         final Tx tx = txMapper.convertToTx(txDto);
 
         //Then
-        assertEquals(89.99, tx.getAmount());
+        assertEquals(BigDecimal.valueOf(89.99), tx.getAmount());
         assertEquals(LocalDate.of(2022, 9, 16), tx.getDate());
         assertEquals(LocalTime.of(23, 30, 1), tx.getTime());
         assertEquals("IFT Debit", tx.getDescr());
