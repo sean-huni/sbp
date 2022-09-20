@@ -11,15 +11,15 @@ spring:
   application:
     name: Batch-Tx-Service
   datasource:
-    #    Note: URL for the mariadb is passed as a an argument.
+    #    Note: URL for the mariadb is passed as an argument.
     #    Add the following IntelliJ Environment Variables in:
     #    Edit Configurations >> Environment >> Environment Variables
     #    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     #    url: jdbc:mariadb://${DB_IP_ADDR}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
-    url: jdbc:mariadb://127.0.0.1:3306/${DB_NAME}?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
     driverClassName: org.mariadb.jdbc.Driver
-    username: root
-    password: NEW_PASS
+    username: ${DB_USER}
+    password: ${DB_PASS}
     hikari:
       auto-commit: true
   jpa:
@@ -27,4 +27,13 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB53Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+
+---
+dir:
+  csv-files:
+    cwd: file://Users/sean/env/pty/proj/microservices/pay-cons/src/main/resources/samples/*.csv
+    in: /env/dev/files/csv/in
+    procd: /env/dev/files/csv/procd
+    err: /env/dev/files/csv/error
+

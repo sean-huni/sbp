@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.vultr.cld</groupId>
-    <artifactId>pay-cons</artifactId>
-    <version>0.0.1</version>
-    <name>pay-cons</name>
-    <description>pay-cons</description>
+    <artifactId>sbp</artifactId>
+    <version>1.0.0</version>
+    <name>sbp</name>
+    <description>sbp</description>
     <properties>
         <java.version>11</java.version>
         <mvn-compiler-plugin.version>3.8.1</mvn-compiler-plugin.version>
@@ -41,6 +41,17 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <!-- Exclude the default Jackson dependency -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-json</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -127,13 +138,6 @@
                         </path>
                     </annotationProcessorPaths>
                     <showWarnings>true</showWarnings>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <imageName>s34n/pay-cons-img</imageName>
                 </configuration>
             </plugin>
         </plugins>

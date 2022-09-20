@@ -1,19 +1,26 @@
 package io.vultr.cld.paycons.domain;
 
+import io.vultr.cld.paycons.util.AbstractJsonUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
-public class TxDto {
-    private Long id;
-    private LocalDate date;
-    private LocalTime time;
-    private String descr;
-    private Character type; //Debit or Credit.
-    private BigDecimal amount;
+public class TxDto extends AbstractJsonUtil {
+    //id, ref, date, time, descr, type, amount
+    private Long id;            //Transaction ID
+    private String ref;         //Transaction Ref
+    private String date;        //Transaction Date
+    private String time;        //Transaction Time
+    private String descr;       //Transaction Description
+    private Character type;     //Transaction Type -> Debit or Credit.
+    private BigDecimal amount;  //Transaction Amount
 }
