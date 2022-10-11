@@ -8,8 +8,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: sbp-job
-          image: s34n/sbp
-          imagePullPolicy: Never
+          image: s34n/sbp:1.0.1
+          imagePullPolicy: Always
           args: [ "fileName=$FILE_NAME" ]
           env:
             - name: DB_HOST
