@@ -41,3 +41,30 @@ dir:
     in: /env/dev/files/csv/in
     procd: /env/dev/files/csv/procd
     err: /env/dev/files/csv/error
+
+---
+spring:
+  cloud:
+    dataflow:
+      applicationProperties:
+        stream:
+          management:
+            endpoint:
+              health:
+                show-components: always
+                show-details: always
+            endpoints:
+              jmx:
+                exposure:
+                  include: '*'
+              web:
+                exposure:
+                  include: '*'
+            metrics:
+              export:
+                prometheus:
+                  enabled: true
+                  rsocket:
+                    enabled: true
+                    host: prometheus-rsocket-proxy
+                    port: 7001

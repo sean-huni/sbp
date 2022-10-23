@@ -1,6 +1,4 @@
 spring:
-  batch:
-    initialize-schema: always
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -23,11 +21,13 @@ spring:
     hikari:
       auto-commit: true
   jpa:
-    #    database-platform: org.hibernate.dialect.SQLServer2012Dialect
     database-platform: org.hibernate.dialect.MariaDB53Dialect
     show-sql: true
     hibernate:
       ddl-auto: validate
+  batch:
+    jdbc:
+      initialize-schema: always
 
 ---
 dir:
@@ -36,3 +36,30 @@ dir:
     in: /env/dev/files/csv/in
     procd: /env/dev/files/csv/procd
     err: /env/dev/files/csv/error
+
+---
+spring:
+  cloud:
+    dataflow:
+      applicationProperties:
+        stream:
+          management:
+            endpoint:
+              health:
+                show-components: always
+                show-details: always
+            endpoints:
+              jmx:
+                exposure:
+                  include: '*'
+              web:
+                exposure:
+                  include: '*'
+            metrics:
+              export:
+                prometheus:
+                  enabled: true
+                  rsocket:
+                    enabled: true
+                    host: prometheus-rsocket-proxy
+                    port: 7001
