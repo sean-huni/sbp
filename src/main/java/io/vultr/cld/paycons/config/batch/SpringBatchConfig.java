@@ -72,10 +72,9 @@ public class SpringBatchConfig {
     }
 
     @Bean
-    public Job job(JobBuilderFactory jobs, StepBuilderFactory steps,
-                   DataSource dataSource, Resource resource) throws Exception {
+    public Job job(JobBuilderFactory jobs, StepBuilderFactory steps, DataSource dataSource, Resource resource) throws Exception {
         return jobs.get("job")
-                .start(steps.get("step")
+                .start(steps.get("step-1")
                         .<TxDto, Tx>chunk(10_000)
                         .reader(itemReader(resource))
                         .processor(itemProcessor())
