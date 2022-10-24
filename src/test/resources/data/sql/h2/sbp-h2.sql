@@ -123,17 +123,32 @@ select *
 from (select 0 as ID, '0' as UNIQUE_KEY) as tmp
 where not exists(select * from BATCH_JOB_SEQ);
 
+-- private Long id;
+-- private Long accNo; //Account-Number
+-- private String name; //Client-Name
+-- private String descr; //Description
+create table account
+(
+    id     bigint primary key auto_increment not null,
+    acc_no bigint                            not null,
+    name   varchar(100)                      null,
+    descr  varchar(200) default 'Transactional Account',
+    constraint acc_no_unq unique (acc_no)
+);
+
 -- # id, date, time, descr, type, amount"
 create table tx
 (
     id     bigint primary key auto_increment not null,
+    acc_id bigint                            not null comment 'Account-ID FK',
     ref    varchar(50)                       not null,
     date   date                              not null,
     time   time                              not null,
     descr  varchar(100)                      not null,
     type   char(1)                           not null,
     amount decimal(20, 2)                    not null,
-    constraint tx_ref_unq unique (ref)
+    constraint tx_ref_unq unique (ref),
+    constraint account_tx_fk foreign key (acc_id) references account (id)
 );
 
 create index tx_descr_indx ON tx (descr);

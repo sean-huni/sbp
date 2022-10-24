@@ -1,8 +1,16 @@
 # Spring Batch Kubernetes
 
-SBP App configured both as Spring Batch and Spring Cloud Task. The essence of the sbp-app is to develop a short-lived
+SBP App configured both as Spring Batch and Spring Cloud Task. The essence of the sbp-app run as a short-lived
 spring-batch task that could process batch-transactions per file in parallel. These batch files would then be launched
 and executed in parallel via Spring Cloud Data Flow.
+
+## The Experiment Apparatus
+
+The experiment has been broken down into 3 services:
+
+1. The Random Transaction-Data Generator. Generates fake transaction that simulates real world.
+2. The Transaction Batch Job Task. ETL (Extract, Transform & Load) the associated transactions per batch-file per pod.
+3. The Task-Launcher. Launches the Tasks (Batch-Jobs) & to move the CSV files to the relevant directories.
 
 ## Setup
 
@@ -35,6 +43,12 @@ JOB_NAME=tx-1 \
 ## CSV Samples
 
 CSV file samples are located in: `src/main/resources/samples`
+
+## Aim of Experiment
+
+The previous experiment didn't cover auto-launching the tasks (Spring batch jobs). This experiment aims to fulfil that
+gap. Therefore, some kind of a task-launcher that listens to a directory & moves successful/failed batch-files to
+different archive/error directories respectively.
 
 # References
 
