@@ -121,27 +121,39 @@ select *
 from (select 0 as ID, '0' as UNIQUE_KEY) as tmp
 where not exists(select * from BATCH_JOB_SEQ);
 
+create table account
+(
+    id     bigint primary key auto_increment not null,
+    acc_no bigint                            not null,
+    name   varchar(100)                      null,
+    descr  varchar(200) default 'Transactional Account',
+    constraint acc_no_unq unique (acc_no)
+);
+
 # id, date, time, descr, type, amount"
 create table tx
 (
     id     bigint primary key auto_increment not null,
+    acc_id bigint                            not null comment 'Account-ID FK',
     ref    varchar(50)                       not null,
     date   date                              not null,
     time   time                              not null,
     descr  varchar(100)                      not null,
     type   varchar(1)                        not null,
     amount decimal(20, 2)                    not null,
-    constraint tx_ref_unq unique (ref)
+    constraint tx_ref_unq unique (ref),
+    constraint account_tx_fk foreign key (acc_id) references account (id)
 );
 
 create index tx_descr_indx ON tx (descr);
 
+# https://github.com/spring-cloud/spring-cloud-task/blob/main/spring-cloud-task-core/src/main/resources/org/springframework/cloud/task/schema-mysql.sql
 # TASK EXECUTION TABLES
 CREATE TABLE TASK_EXECUTION
 (
     TASK_EXECUTION_ID     BIGINT NOT NULL PRIMARY KEY,
-    START_TIME            TIMESTAMP DEFAULT NULL,
-    END_TIME              TIMESTAMP DEFAULT NULL,
+    START_TIME            DATETIME DEFAULT NULL,
+    END_TIME              DATETIME DEFAULT NULL,
     TASK_NAME             VARCHAR(100),
     EXIT_CODE             INTEGER,
     EXIT_MESSAGE          VARCHAR(2500),
@@ -149,7 +161,7 @@ CREATE TABLE TASK_EXECUTION
     LAST_UPDATED          TIMESTAMP,
     EXTERNAL_EXECUTION_ID VARCHAR(255),
     PARENT_EXECUTION_ID   BIGINT
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE TASK_EXECUTION_PARAMS
 (
@@ -157,7 +169,7 @@ CREATE TABLE TASK_EXECUTION_PARAMS
     TASK_PARAM        VARCHAR(2500),
     constraint TASK_EXEC_PARAMS_FK foreign key (TASK_EXECUTION_ID)
         references TASK_EXECUTION (TASK_EXECUTION_ID)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE TASK_TASK_BATCH
 (
@@ -165,15 +177,24 @@ CREATE TABLE TASK_TASK_BATCH
     JOB_EXECUTION_ID  BIGINT NOT NULL,
     constraint TASK_EXEC_BATCH_FK foreign key (TASK_EXECUTION_ID)
         references TASK_EXECUTION (TASK_EXECUTION_ID)
-);
+) ENGINE = InnoDB;
 
-CREATE SEQUENCE TASK_SEQ;
+CREATE TABLE TASK_SEQ
+(
+    ID         BIGINT  NOT NULL,
+    UNIQUE_KEY CHAR(1) NOT NULL,
+    constraint UNIQUE_KEY_UN unique (UNIQUE_KEY)
+) ENGINE = InnoDB;
+
+INSERT INTO TASK_SEQ (ID, UNIQUE_KEY)
+select *
+from (select 0 as ID, '0' as UNIQUE_KEY) as tmp;
 
 CREATE TABLE TASK_LOCK
 (
     LOCK_KEY     CHAR(36)     NOT NULL,
     REGION       VARCHAR(100) NOT NULL,
     CLIENT_ID    CHAR(36),
-    CREATED_DATE TIMESTAMP    NOT NULL,
+    CREATED_DATE DATETIME(6)  NOT NULL,
     constraint LOCK_PK primary key (LOCK_KEY, REGION)
-);
+) ENGINE = InnoDB;
