@@ -7,7 +7,7 @@ spring:
   gson:
     disable-html-escaping: false
   application:
-    name: Tx-Proc-Service
+    name: sbp
   datasource:
     #    Note: URL for the mariadb is passed as an argument.
     #    Add the following IntelliJ Environment Variables in:
@@ -28,6 +28,11 @@ spring:
   batch:
     jdbc:
       initialize-schema: NEVER
+
+---
+hibernate:
+  create_empty_composites:
+    enabled: false
 
 ---
 dir:

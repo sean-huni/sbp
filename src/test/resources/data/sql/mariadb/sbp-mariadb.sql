@@ -126,7 +126,7 @@ create table account
     id     bigint primary key auto_increment not null,
     acc_no bigint                            not null,
     name   varchar(100)                      null,
-    descr  varchar(200) default 'Transactional Account',
+    descr  varchar(200)                      not null default 'Transactional Account',
     constraint acc_no_unq unique (acc_no)
 );
 
