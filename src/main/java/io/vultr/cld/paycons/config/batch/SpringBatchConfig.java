@@ -67,7 +67,7 @@ public class SpringBatchConfig {
     @StepScope
     public JdbcBatchItemWriter<Tx> itemWriter(DataSource dataSource, Resource resource, AccountRepo accountRepo) {
         final Long accountNo = Long.valueOf(resource.getFilename().split("_")[0]);
-        log.info("Account-No: {}", accountNo);
+        log.info("Saving Collection<Tx> for Account-No: {}", accountNo);
         var acc = new Account();
         acc.setAccNo(accountNo);
         accountRepo.save(acc);

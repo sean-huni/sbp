@@ -1,5 +1,6 @@
 package io.vultr.cld.paycons.persistence.repo;
 
+import io.vultr.cld.paycons.persistence.entity.Account;
 import io.vultr.cld.paycons.persistence.entity.Tx;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
 class TxRepoTest {
     @Autowired
+    private AccountRepo accountRepo;
+    @Autowired
     private TxRepo txRepo;
     private String ref;
 
@@ -28,9 +31,15 @@ class TxRepoTest {
     }
 
     @Test
-    void givenTxRepo_whenSavingNewEntry_thenReturnSavedTx() {
+    void givenTxRepo_whenSavingNewTxEntry_thenReturnSavedTx() {
+
+        final var acc = new Account();
+        acc.setAccNo(100015397L);
+
+        accountRepo.save(acc);
 
         final Tx tx = Tx.builder().ref(ref)
+                .account(acc)
                 .date(LocalDate.now())
                 .time(LocalTime.now())
                 .descr("IFT Withdrawal").type("C")
@@ -38,6 +47,10 @@ class TxRepoTest {
 
         txRepo.save(tx);
         final Tx txResp = txRepo.findById(1L).get();
+
+        assertNotNull(acc);
+        assertNotNull(acc.getId());
+//        assertEquals("Transactional Account", acc.getDescr()); //Not Passing as expected!
 
         assertNotNull(txResp);
         assertEquals("IFT Withdrawal", txResp.getDescr());

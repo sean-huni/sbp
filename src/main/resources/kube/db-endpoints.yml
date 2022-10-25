@@ -1,0 +1,9 @@
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: mariadb
+subsets:
+  - addresses:
+      - ip: 78.141.201.212 # DB IP-Addr
+    ports:
+      - port: 3306

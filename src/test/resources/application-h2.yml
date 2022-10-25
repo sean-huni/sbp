@@ -3,13 +3,13 @@ spring:
     converters:
       preferred-json-mapper: gson #Preferred JSON mapper to use for HTTP message conversion.
   application:
-    name: Tx-Proc-Service
+    name: sbp
   datasource:
     url: jdbc:h2:mem:sbp?createDatabaseIfNotExist=true;DB_CLOSE_DELAY=-1;
     driverClassName: org.h2.Driver
     username: sa
     password:
-    data: classpath*:data/sql/h2/sbp-h2.sql
+    #    data: classpath*:data/sql/h2/sbp-h2.sql
     hikari:
       auto-commit: true
       maximum-pool-size: 200
@@ -18,16 +18,26 @@ spring:
     show-sql: true
     database: h2
     hibernate:
-      ddl-auto: create
+      ddl-auto: 'validate'
   h2:
     console:
       enabled: true
       settings:
         trace: true
+  sql:
+    init:
+      schema-locations:
+        - classpath*:data/sql/h2/sbp-h2.sql
+
   batch:
-    initialize-schema: always
+    initialize-schema: NEVER
   main:
     allow-bean-definition-overriding: true
+
+---
+hibernate:
+  create_empty_composites:
+    enabled: false
 
 ---
 logging:
