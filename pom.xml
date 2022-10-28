@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.vultr.cld</groupId>
     <artifactId>sbp</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <name>sbp</name>
     <description>sbp</description>
     <properties>

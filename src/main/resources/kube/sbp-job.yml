@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sbp-job-$JOB_NAME
+  name: sbp-$JOB_NAME
 spec:
   template:
     spec:
       restartPolicy: OnFailure
       containers:
         - name: sbp-job
-          image: s34n/sbp:1.0.1
+          image: s34n/sbp:2.1.2
           imagePullPolicy: Always
           args: [ "fileName=$FILE_NAME" ]
           env:
@@ -28,3 +28,10 @@ spec:
                 secretKeyRef:
                   name: db-secret
                   key: db.password
+          volumeMounts:
+            - name: data
+              mountPath: /tmp/in
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sbp
