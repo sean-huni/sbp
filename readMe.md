@@ -17,7 +17,7 @@ is not ideal.
 The experiment has been broken down into 3 services:
 
 1. The Random Transaction-Data Generator. Generates fake transaction that simulates real world.
-2. The Transaction Batch Job Task. ETL (Extract, Transform & Load) the associated transactions per batch-file per pod.
+2. The Transaction Batch Job Task. ETL (Extract, Transform & Load) the associated transactions per batch-file per pod. (This App)
 3. The Task-Launcher. Launches the Tasks (Batch-Jobs) & to move the CSV files to the relevant directories.
 
 ## Setup
@@ -99,15 +99,27 @@ monitor the resource usage of the Spring Apps running the Kubernetes Cluster in 
 
 ## Resource Utilisation
 
-Supposedly, the batch-job has reached completion status. Should the pod/app-instance remain idle indefinitely? It's a
-cost-effective strategy to release resources when not utilised in a bill-per-usage based infrastructure. Hence, Spring
-Batch Jobs can be configured as Spring Tasks, once completed successfully, they can be gracefully shutdown.
+Supposedly, the batch-job has reached completion status. Should the pod/app-instance remain idle indefinitely, or till 
+the next cycle/iteration? It's a cost-effective strategy to release resources when not utilised in a bill-per-usage 
+cloud-based infrastructure. Hence, Spring Batch Jobs can be configured as Spring Tasks, once completed successfully, 
+they can be shutdown gracefully.
+
+
+## Challenges Experienced
+1. Setting up Spring Cloud Data Flow
+2. Launching the jobs using the kubectl from within a running Pod.
+3. 
 
 # References
 
 [Spring Batch on Kubernetes: Efficient batch processing at scale](https://spring.io/blog/2021/01/27/spring-batch-on-kubernetes-efficient-batch-processing-at-scale)
+
 [Creating Docker Images with Spring Boot](https://www.baeldung.com/spring-boot-docker-images)
+
 [Kubernetes Parallel Processing Example](https://kubernetes.io/docs/tasks/job/parallel-processing-expansion/)
+
 [Creating a Kubernetes Cluster](https://dataflow.spring.io/docs/installation/kubernetes/creating-a-cluster/)
+
 [Spring Batch Processing with Spring Cloud Task](https://dataflow.spring.io/docs/batch-developer-guides/batch/spring-task/)
+
 [Spring Cloud Data Flow](https://dataflow.spring.io/docs/installation/kubernetes/kubectl/)
